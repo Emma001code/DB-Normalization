@@ -1,0 +1,26 @@
+ProjectID,WorkerName,Equipment
+P001,Mike Ross,Crane
+P001,Mike Ross,Bulldozer
+P001,Rachel Zane,Crane
+P001,Rachel Zane,Bulldozer
+P001,Harvey Specter,Crane
+P002,Mike Ross,Excavator
+P002,Mike Ross,Crane
+P002,Tom Hardy,Excavator
+P002,Tom Hardy,Crane
+P003,Rachel Zane,Mixer
+P003,Rachel Zane,Forklift
+P003,Tom Hardy,Mixer
+P003,Tom Hardy,Forklift
+P004,Mike Ross,Crane
+P004,Mike Ross,Lift
+P004,Louis Litt,Lift
+P005,Harvey Specter,Bulldozer
+P005,Harvey Specter,Mixer
+P005,Rachel Zane,Bulldozer
+P005,Rachel Zane,Mixer
+P006,Tom Hardy,Mixer
+P006,Mike Ross,Mixer
+P007,Louis Litt,Crane
+P007,Louis Litt,Excavator
+P007,Harvey Specter,Excavator

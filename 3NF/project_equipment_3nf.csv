@@ -1,0 +1,26 @@
+ProjectID,WorkerName,Equipment,RentalCost
+P001,Mike Ross,Crane,5000
+P001,Mike Ross,Bulldozer,3000
+P001,Rachel Zane,Crane,5000
+P001,Rachel Zane,Bulldozer,3000
+P001,Harvey Specter,Crane,5000
+P002,Mike Ross,Excavator,4000
+P002,Mike Ross,Crane,5500
+P002,Tom Hardy,Excavator,4000
+P002,Tom Hardy,Crane,5500
+P003,Rachel Zane,Mixer,800
+P003,Rachel Zane,Forklift,1200
+P003,Tom Hardy,Mixer,800
+P003,Tom Hardy,Forklift,1200
+P004,Mike Ross,Crane,6000
+P004,Mike Ross,Lift,2000
+P004,Louis Litt,Lift,2000
+P005,Harvey Specter,Bulldozer,3200
+P005,Harvey Specter,Mixer,1000
+P005,Rachel Zane,Bulldozer,3200
+P005,Rachel Zane,Mixer,1000
+P006,Tom Hardy,Mixer,900
+P006,Mike Ross,Mixer,900
+P007,Louis Litt,Crane,6500
+P007,Louis Litt,Excavator,4200
+P007,Harvey Specter,Excavator,4200

@@ -1,0 +1,26 @@
+ProjectID,WorkerName,Material,UnitCost
+P001,Mike Ross,Concrete,120
+P001,Mike Ross,Steel,300
+P001,Rachel Zane,Concrete,120
+P001,Rachel Zane,Steel,300
+P001,Harvey Specter,Steel Beams,500
+P002,Mike Ross,Rebar,200
+P002,Mike Ross,Concrete,110
+P002,Tom Hardy,Rebar,200
+P002,Tom Hardy,Concrete,110
+P003,Rachel Zane,Bricks,2
+P003,Rachel Zane,Cement,15
+P003,Tom Hardy,Bricks,2
+P003,Tom Hardy,Cement,15
+P004,Mike Ross,Steel Beams,500
+P004,Mike Ross,Glass Panels,250
+P004,Louis Litt,Glass Panels,250
+P005,Harvey Specter,Concrete,130
+P005,Harvey Specter,Tiles,20
+P005,Rachel Zane,Concrete,130
+P005,Rachel Zane,Tiles,20
+P006,Tom Hardy,Concrete,115
+P006,Mike Ross,Concrete,115
+P007,Louis Litt,Steel Beams,520
+P007,Louis Litt,Concrete,140
+P007,Harvey Specter,Rebar,210

@@ -1,0 +1,31 @@
+ProjectID,WorkerName,Skill
+P001,Mike Ross,Carpentry
+P001,Mike Ross,Framing
+P001,Rachel Zane,Electrical
+P001,Rachel Zane,Wiring
+P001,Harvey Specter,Project Management
+P001,Harvey Specter,Planning
+P002,Mike Ross,Carpentry
+P002,Mike Ross,Concrete
+P002,Tom Hardy,Welding
+P002,Tom Hardy,Steel Fixing
+P003,Rachel Zane,Electrical
+P003,Rachel Zane,Inspection
+P003,Tom Hardy,Welding
+P003,Tom Hardy,Carpentry
+P004,Mike Ross,Concrete
+P004,Mike Ross,Framing
+P004,Louis Litt,Accounting
+P004,Louis Litt,Procurement
+P005,Harvey Specter,Planning
+P005,Harvey Specter,Management
+P005,Rachel Zane,Wiring
+P005,Rachel Zane,Inspection
+P006,Tom Hardy,Welding
+P006,Tom Hardy,Concrete
+P006,Mike Ross,Framing
+P006,Mike Ross,Carpentry
+P007,Louis Litt,Procurement
+P007,Louis Litt,Accounting
+P007,Harvey Specter,Management
+P007,Harvey Specter,Planning

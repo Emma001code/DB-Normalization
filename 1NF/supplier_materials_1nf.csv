@@ -1,0 +1,26 @@
+ProjectID,WorkerName,SupplierName,Material,UnitCost
+P001,Mike Ross,BuildPro Supplies,Concrete,120
+P001,Mike Ross,BuildPro Supplies,Steel,300
+P001,Rachel Zane,BuildPro Supplies,Concrete,120
+P001,Rachel Zane,BuildPro Supplies,Steel,300
+P001,Harvey Specter,SteelWorks Inc,Steel Beams,500
+P002,Mike Ross,Oceanic Materials,Rebar,200
+P002,Mike Ross,Oceanic Materials,Concrete,110
+P002,Tom Hardy,Oceanic Materials,Rebar,200
+P002,Tom Hardy,Oceanic Materials,Concrete,110
+P003,Rachel Zane,BuildPro Supplies,Bricks,2
+P003,Rachel Zane,BuildPro Supplies,Cement,15
+P003,Tom Hardy,BuildPro Supplies,Bricks,2
+P003,Tom Hardy,BuildPro Supplies,Cement,15
+P004,Mike Ross,SteelWorks Inc,Steel Beams,500
+P004,Mike Ross,SteelWorks Inc,Glass Panels,250
+P004,Louis Litt,Global Glass Co,Glass Panels,250
+P005,Harvey Specter,Pacific Materials,Concrete,130
+P005,Harvey Specter,Pacific Materials,Tiles,20
+P005,Rachel Zane,Pacific Materials,Concrete,130
+P005,Rachel Zane,Pacific Materials,Tiles,20
+P006,Tom Hardy,Southern Concrete,Concrete,115
+P006,Mike Ross,Southern Concrete,Concrete,115
+P007,Louis Litt,SteelWorks Inc,Steel Beams,520
+P007,Louis Litt,SteelWorks Inc,Concrete,140
+P007,Harvey Specter,Oceanic Materials,Rebar,210
