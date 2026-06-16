@@ -2,7 +2,7 @@
 
 ## What we did
 
-After 1NF, every cell had one value — good. But our main table still had a problem: **the same information was copied over and over**.
+After 1NF, every cell had one value, good. But our main table still had a problem: **the same information was copied over and over**.
 
 Example: “Downtown Plaza” and Metro Corp’s phone number appeared on **every** P001 row, just because Mike, Rachel, and Harvey each had their own row. That happened because some columns only depend on **part** of the row’s ID (like ProjectID alone), not the full combination of ProjectID + WorkerName.
 
@@ -24,6 +24,7 @@ Why we kept `SupplierName` on the assignment table:
 - So supplier is not just “per project”; it is tied to **the worker on that project**, which matches the composite key (ProjectID, WorkerName).
 
 ---
+# Questions and Answer
 
 ## Which tables had composite keys?
 

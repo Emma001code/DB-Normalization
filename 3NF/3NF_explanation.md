@@ -1,6 +1,8 @@
-# Stage 3: Third Normal Form (3NF) — Group 8
+# Stage 3: Third Normal Form (3NF), Group 8
 
 ## What we did
+
+**Group 8:** Bonae Ineza, Emmanuel Ngwoke, Alice Uwase, Veronicah Wanjuu
 
 2NF stopped columns from depending on **half** of a composite key. **3NF** fixes a different problem: columns that depend on **other non-key columns** instead of depending directly on the primary key.
 
@@ -10,11 +12,31 @@ The city and state really belong to the **address**, not to the project ID itsel
 
 Most of our other “A → B → C” chains were already fixed in 2NF when we made separate client, worker, and supplier tables. Stage 3 mainly adds the **sites** table and double-checks everything else.
 
----
+### What we looked at as a group (questions about our 3NF files)
 
+Bonae asked: *`projects_2nf` still has `ClientName` and `SupervisorName` on it. If client phone and email are already in `clients_2nf`, why not remove those names from the project table too?*
+
+Alice asked: *why create a whole new `sites_3nf.csv`? Could we not just leave `SiteCity` and `SiteState` on `projects_3nf` since every project already has one address?*
+
+Veronicah asked: *we fixed clients, workers, and suppliers in 2NF. Does 3NF actually change anything, or is it only the sites table?*
+
+Emmanuel asked: *on `supplier_materials_3nf`, Concrete costs 120 on P001 and 110 on P002. Should we make a global `materials` table where material name alone decides price?*
+
+We discussed each point and agreed on this:
+
+| Question | Our decision | Why |
+|----------|--------------|-----|
+| Keep `ClientName` / `SupervisorName` on `projects_3nf`? | **Yes, keep as links** | They are foreign keys, not copies of phone/email. The chain ClientName → phone was broken in 2NF when we made `clients_3nf`. |
+| Create `sites_3nf`? | **Yes** | `SiteAddress` decides city and state. Storing city/state on `projects_3nf` is a chain: project → address → city. |
+| Is 3NF only sites? | **Mostly yes for new work** | Client, worker, and supervisor chains were fixed in 2NF. We verified those tables and added `sites_3nf` as the main new fix. |
+| Global `materials` table by name? | **No** | Same material, different prices (Concrete: 120 vs 110). Price depends on project context, not material name alone. That is checked again in BCNF. |
+
+**Bottom line (all four of us):** 3NF means no column depends on another non-key column in the same table. Our main new split was **sites**; the rest was checking that 2NF already broke the other chains.
+
+---
 ## Which transitive dependencies did we find?
 
-### Fixed in this stage — site location on projects
+### Fixed in this stage: site location on projects
 
 | Chain | What it means |
 |-------|---------------|
@@ -48,16 +70,16 @@ These chains were in the **raw mess**, but we broke them when we split entity ta
 | WorkerName → phone, hourly rate | `workers_3nf` |
 | SupplierName → city | `suppliers_3nf` |
 
-**Example:** Metro Corp is always `617-555-1000` / `contact@metrocorp.com`. We no longer copy that onto every assignment row — we store it once in `clients_3nf` and link with ClientName.
+**Example:** Metro Corp is always `617-555-1000` / `contact@metrocorp.com`. We no longer copy that onto every assignment row; we store it once in `clients_3nf` and link with ClientName.
 
 ---
 
-### Checked — no transitive problem found
+### Checked: no transitive problem found
 
 | Table | Why it is fine |
 |-------|----------------|
 | `project_worker_assignments_3nf` | Only extra column is SupplierName (a link to suppliers) |
-| `supplier_materials_3nf` | Concrete costs 120 on P001 but 110 on P002 — price is not a simple “material name → price” rule |
+| `supplier_materials_3nf` | Concrete costs 120 on P001 but 110 on P002, so price is not a simple “material name → price” rule |
 | `project_equipment_3nf` | Crane rental varies by project (5000 up to 6500) |
 | Skills, certs, supplier phones | Key columns only |
 
@@ -73,7 +95,7 @@ These chains were in the **raw mess**, but we broke them when we split entity ta
 | Raw / 1NF rows | WorkerName → phone, rate | Already in `workers_3nf` (Stage 2) |
 | Raw / 1NF rows | SupplierName → city | Already in `suppliers_3nf` (Stage 2) |
 
-On `projects_3nf`, ClientName and SupervisorName are just **pointers** — they do not carry phone numbers anymore, so there is no chain on that table except the site fix above.
+On `projects_3nf`, ClientName and SupervisorName are just **pointers**: they do not carry phone numbers anymore, so there is no chain on that table except the site fix above.
 
 ---
 
@@ -99,9 +121,9 @@ Everything else is the same structure as 2NF, copied forward as `_3nf` files.
 
 | Table | Foreign key | Links to |
 |-------|-------------|----------|
-| `projects_3nf` | SiteAddress | `sites_3nf` — where is this project built? |
-| `projects_3nf` | ClientName | `clients_3nf` — who hired us? |
-| `projects_3nf` | SupervisorName | `supervisors_3nf` — who manages the site? |
+| `projects_3nf` | SiteAddress | `sites_3nf`: where is this project built? |
+| `projects_3nf` | ClientName | `clients_3nf`: who hired us? |
+| `projects_3nf` | SupervisorName | `supervisors_3nf`: who manages the site? |
 | `project_worker_assignments_3nf` | ProjectID, WorkerName, SupplierName | projects, workers, suppliers |
 | Skills, certs, materials, equipment tables | (ProjectID, WorkerName) | assignment row |
 
@@ -116,11 +138,11 @@ sites_3nf:     123 Main St | Boston | MA
 
 ## Why this is in 3NF now
 
-1. Still in 2NF — no partial dependencies.
+1. Still in 2NF: no partial dependencies.
 2. **No non-key column depends on another non-key column** within the same table.
 3. Facts about clients, workers, suppliers, and sites are stored **once** and linked, not copied through a chain.
 
-**Next:** In BCNF we look at trickier rules — like whether material price really needs the worker’s name in the key (spoiler: it does not always).
+**Next:** In BCNF we look at trickier rules, like whether material price really needs the worker’s name in the key (spoiler: it does not always).
 
 ---
 

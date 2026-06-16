@@ -1,51 +1,51 @@
-# Stage 5: Fourth Normal Form (4NF) — Group 8
+# Stage 5: Fourth Normal Form (4NF), Group 8
 
 ## What we did
 
 **Group 8:** Bonae Ineza, Emmanuel Ngwoke, Alice Uwase, Veronicah Wanjuu
 
-After BCNF, our tables were logically tight — but the **raw CSV still had a deeper problem** hiding in plain sight: **several independent lists were stored as if they belonged together**.
+By BCNF, our tables were in good shape: one value per cell, sensible keys. But the **raw file** still mixed up **separate lists** on the same row.
 
-Emmanuel described it like this: imagine Alice writing on one line that a worker has skills `Carpentry|Framing` **and** certifications `OSHA|First Aid`. If you expand that into one table without thinking, you can accidentally create pairings that never existed — like “Framing + PMP” — even though the raw data never said that.
+Alice gave the simplest example from row 2 (Mike Ross on P001):
+- Skills: `Carpentry|Framing`
+- Certs: `OSHA|First Aid`
 
-In 4NF, our job was to make sure **each independent list lives in its own table**, so joining tables never invents fake facts.
+Those are **two different lists**. OSHA does not come with Carpentry. If we put both lists in one table and expand every skill with every cert, we invent rows we never had, like “Framing + PMP” when PMP was never on Mike’s row.
 
-We started separating lists back in **1NF** (skills vs certs, materials vs equipment, phones vs materials). In **4NF**, we finished the job: we verified every BCNF table, renamed a few files for clarity, and added tables where two independent lists were still bundled together (especially **project workers** vs **project suppliers**).
+**4NF fix:** put each list in **its own table**. Join only when the raw data really connects them.
 
-### What we discussed as a group (why 4NF matters for our data)
+We already split `\|` lists in **1NF**. In **4NF** we finished by:
+- keeping skills, certs, materials, and equipment in **separate** files
+- splitting **who works on a project** from **which suppliers the project uses**
+- splitting **supplier phones** from **supplier materials**
 
-After BCNF, Veronicah asked: *“Aren’t we done? Every cell is atomic and keys look correct.”*
+### What we looked at as a group (questions about our 4NF files)
 
-Bonae answered with a raw-data example from P001:
-- Workers on the project: Mike, Rachel, Harvey
-- Suppliers on the project: BuildPro and SteelWorks
-- Those are **two separate lists** — not every worker uses every supplier
+Bonae asked: *why do we still have `project_worker_assignments_bcnf.csv` in BCNF but three files in 4NF (`project_workers_4nf`, `project_suppliers_4nf`, and `worker_supplier_assignments_4nf`)? Isn’t that the same information repeated?*
 
-Alice added another example from the same raw rows:
-- `WorkerSkills` and `WorkerCertifications` are both lists, but **independent** (OSHA does not “belong to” Carpentry)
-- `MaterialSupplied` and `EquipmentUsed` are also independent (Concrete does not determine Crane)
+Veronicah asked: *we already have `assignment_materials_4nf`. Why add `supplier_materials_4nf` as well? Don’t both tables list materials?*
 
-Emmanuel summarized the 4NF rule for our group:
+Alice asked: *why rename `worker_skills_bcnf` to `assignment_skills_4nf`? The data looks the same. Did anything actually change?*
 
-> **If one thing has two unrelated multi-value lists, don’t store them in a way that forces combinations.**
+Emmanuel asked: *could we put skills and certifications in one table now that every cell is single-valued? We’d just have more rows.*
 
-That discussion drove our final splits:
+We discussed each point and agreed on this:
 
-| Mixed lists in raw / BCNF | Our 4NF separation |
-|---------------------------|-------------------|
-| Skills + Certifications | `assignment_skills_4nf` + `assignment_certifications_4nf` |
-| Materials + Equipment usage | `assignment_materials_4nf` + `assignment_equipment_4nf` |
-| Project workers + project suppliers | `project_workers_4nf` + `project_suppliers_4nf` + `worker_supplier_assignments_4nf` |
-| Supplier phones + supplier materials | `supplier_phones_4nf` + `supplier_materials_4nf` |
+| Question | Our decision | Why |
+|----------|--------------|-----|
+| One assignment file vs three project files | **Split into three** | P001 has 3 workers and 2 suppliers (separate lists). `worker_supplier_assignments_4nf` only stores real pairs (Mike→BuildPro, Harvey→SteelWorks), not all 6 combinations. |
+| `assignment_materials_4nf` vs `supplier_materials_4nf` | **Keep both** | Assignment materials = what Mike used on P001. Supplier materials = what BuildPro can supply in general. Different questions, different tables. |
+| Rename to `assignment_skills_4nf` | **Yes, rename** | Same rows as BCNF, but the name shows these skills belong to an **assignment**, not mixed with certs in one file. |
+| One table for skills + certs | **No** | Cells would be atomic, but we’d still mix two **independent lists**. Joining them could invent pairs like “Framing + PMP” that never existed in the raw CSV. |
 
-**Bottom line (all four of us):** 4NF is about **independent lists**, not just “one value per cell.” Our final design stores each list once, then links them only where the raw data proves a real relationship.
+**Bottom line (all four of us):** 4NF is about **which files we keep separate**, not splitting `\|` again. If two lists don’t depend on each other, they stay in different CSVs.
 
 ---
 # Questions and Answers
 
 ## Which multi-valued dependencies did you identify?
 
-A **multi-valued dependency** (MVD) means: for one project/worker/supplier, there is a **set** of values — and that set does not determine another set.
+A **multi-valued dependency** (MVD) means: for one project/worker/supplier, there is a **set** of values, and that set does not determine another set.
 
 | # | Multi-valued dependency | What it means in our data |
 |---|-------------------------|---------------------------|
@@ -61,7 +61,7 @@ A **multi-valued dependency** (MVD) means: for one project/worker/supplier, ther
 **Independence examples (why 4NF is needed):**
 - Skills ⊥ Certifications (raw row 2: `Carpentry|Framing` vs `OSHA|First Aid`)
 - Materials ⊥ Equipment (raw row 2: `Concrete|Steel` vs `Crane|Bulldozer`)
-- Workers ⊥ Suppliers on a project (P001: 3 workers, 2 suppliers — not a full cross-product)
+- Workers ⊥ Suppliers on a project (P001: 3 workers, 2 suppliers, not a full cross-product)
 - Phones ⊥ Materials for a supplier (raw row 2: two phones vs two materials)
 
 ---
@@ -94,20 +94,20 @@ A **multi-valued dependency** (MVD) means: for one project/worker/supplier, ther
 
 Instead of only one assignment file, we use three tables:
 
-`project_workers_4nf` — who works on the project:
+`project_workers_4nf`: who works on the project:
 ```
 P001 | Mike Ross
 P001 | Rachel Zane
 P001 | Harvey Specter
 ```
 
-`project_suppliers_4nf` — which suppliers the project uses:
+`project_suppliers_4nf`: which suppliers the project uses:
 ```
 P001 | BuildPro Supplies
 P001 | SteelWorks Inc
 ```
 
-`worker_supplier_assignments_4nf` — which supplier each worker actually uses:
+`worker_supplier_assignments_4nf`: which supplier each worker actually uses:
 ```
 P001 | Mike Ross      | BuildPro Supplies
 P001 | Rachel Zane    | BuildPro Supplies
@@ -162,13 +162,13 @@ supplier_materials_4nf: BuildPro Supplies | Concrete
 
 ## Why is our final design in 4NF?
 
-1. **Still in BCNF** — every functional dependency has a candidate-key determinant (Stage 4 fixes still apply).
+1. **Still in BCNF:** every functional dependency has a candidate-key determinant (Stage 4 fixes still apply).
 
 2. **No table mixes two unrelated lists.** Skills are separate from certs; materials separate from equipment; workers/suppliers lists are separate and only linked through `worker_supplier_assignments_4nf`; phones separate from supplier materials.
 
-3. **Joining does not invent fake rows.** If you join skills and certifications on (ProjectID, WorkerName), you only combine values that exist independently in each list — you don’t force every skill to pair with every cert.
+3. **Joining does not invent fake rows.** If you join skills and certifications on (ProjectID, WorkerName), you only combine values that exist independently in each list; you don’t force every skill to pair with every cert.
 
-4. **All raw facts can be recovered** by joining the 4NF tables — nothing was deleted, only reorganized.
+4. **All raw facts can be recovered** by joining the 4NF tables; nothing was deleted, only reorganized.
 
 ---
 
@@ -198,7 +198,7 @@ Each row says **one thing**.
 
 | Stage | What we fixed |
 |-------|----------------|
-| **1NF** | Split `\|` cells — one value per cell |
+| **1NF** | Split `\|` cells: one value per cell |
 | **2NF** | Stop copying project/client/worker/supplier facts on every row |
 | **3NF** | Stop chaining facts (address → city; client name → phone) |
 | **BCNF** | Price/rental keys match what actually determines them (not worker name) |
