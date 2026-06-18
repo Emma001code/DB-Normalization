@@ -2,8 +2,6 @@
 
 ## What we did
 
-**Group 8:** Bonae Ineza, Emmanuel Ngwoke, Alice Uwase, Veronicah Wanjuu
-
 2NF stopped columns from depending on **half** of a composite key. **3NF** fixes a different problem: columns that depend on **other non-key columns** instead of depending directly on the primary key.
 
 Simple picture: **Project → Site Address → City/State**

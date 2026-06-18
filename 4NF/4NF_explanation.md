@@ -2,8 +2,6 @@
 
 ## What we did
 
-**Group 8:** Bonae Ineza, Emmanuel Ngwoke, Alice Uwase, Veronicah Wanjuu
-
 By BCNF, our tables were in good shape: one value per cell, sensible keys. But the **raw file** still mixed up **separate lists** on the same row.
 
 Alice gave the simplest example from row 2 (Mike Ross on P001):
@@ -207,27 +205,3 @@ Each row says **one thing**.
 This completes our normalization of `big3_construction_raw_data.csv`.
 
 ---
-
-## Files in this folder
-
-```
-4NF/
-  sites_4nf.csv
-  projects_4nf.csv
-  clients_4nf.csv
-  supervisors_4nf.csv
-  workers_4nf.csv
-  suppliers_4nf.csv
-  project_workers_4nf.csv
-  project_suppliers_4nf.csv
-  worker_supplier_assignments_4nf.csv
-  assignment_skills_4nf.csv
-  assignment_certifications_4nf.csv
-  assignment_materials_4nf.csv
-  assignment_equipment_4nf.csv
-  project_material_pricing_4nf.csv
-  project_equipment_rental_4nf.csv
-  supplier_phones_4nf.csv
-  supplier_materials_4nf.csv
-  4NF_explanation.md
-```
